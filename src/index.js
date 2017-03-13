@@ -130,4 +130,4 @@ class ValidString {
   }
 }
 
-export default ValidString
+module.exports = ValidString

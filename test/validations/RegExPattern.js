@@ -1,8 +1,7 @@
 var expect = require('chai').expect;
 var validation = require('../../dist/validations/RegExPattern').default
 
-describe('NotEmpty validation', function() {
-
+describe('RegExPattern validation', function() {
 
   var instance = new validation({
     pattern: /^Hello World$/

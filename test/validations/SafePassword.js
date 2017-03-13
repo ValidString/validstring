@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var validation = require('../../dist/validations/SafePassword').default
 
-describe('NotEmpty validation', function() {
+describe('SefePassword validation', function() {
 
 
   var instance = new validation()

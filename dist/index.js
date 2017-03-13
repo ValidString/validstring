@@ -1,9 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -11,6 +7,18 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _ValidationFactory = require('./ValidationFactory');
 
 var _ValidationFactory2 = _interopRequireDefault(_ValidationFactory);
+
+var _Has = require('./validations/Has');
+
+var _Has2 = _interopRequireDefault(_Has);
+
+var _HasNot = require('./validations/HasNot');
+
+var _HasNot2 = _interopRequireDefault(_HasNot);
+
+var _Numeric = require('./validations/Numeric');
+
+var _Numeric2 = _interopRequireDefault(_Numeric);
 
 var _NotEmpty = require('./validations/NotEmpty');
 
@@ -24,25 +32,13 @@ var _AlphaNumeric = require('./validations/AlphaNumeric');
 
 var _AlphaNumeric2 = _interopRequireDefault(_AlphaNumeric);
 
-var _Numeric = require('./validations/Numeric');
-
-var _Numeric2 = _interopRequireDefault(_Numeric);
-
-var _RegExPattern = require('./validations/RegExPattern');
-
-var _RegExPattern2 = _interopRequireDefault(_RegExPattern);
-
 var _SafePassword = require('./validations/SafePassword');
 
 var _SafePassword2 = _interopRequireDefault(_SafePassword);
 
-var _Has = require('./validations/Has');
+var _RegExPattern = require('./validations/RegExPattern');
 
-var _Has2 = _interopRequireDefault(_Has);
-
-var _HasNot = require('./validations/HasNot');
-
-var _HasNot2 = _interopRequireDefault(_HasNot);
+var _RegExPattern2 = _interopRequireDefault(_RegExPattern);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -187,26 +183,16 @@ var ValidString = function () {
   }, {
     key: 'has',
     value: function has(options) {
-      return this.append('Has', options);
+      return this.append('has', options);
     }
   }, {
     key: 'hasNot',
     value: function hasNot(options) {
-      return this.append('HasNot', options);
+      return this.append('hasNot', options);
     }
   }]);
 
   return ValidString;
 }();
 
-exports.default = ValidString;
-/*
-export NotEmpty
-export Alphabetic
-export AlphaNumeric
-export Numeric
-export RegExPattern
-export SafePassword
-export Has
-export HasNot
-*/
+module.exports = ValidString;
