@@ -1,14 +1,13 @@
 import ValidationFactory from './ValidationFactory'
 
+import Has from './validations/Has'
+import HasNot from './validations/HasNot'
+import Numeric from './validations/Numeric'
 import NotEmpty from './validations/NotEmpty'
 import Alphabetic from './validations/Alphabetic'
 import AlphaNumeric from './validations/AlphaNumeric'
-import Numeric from './validations/Numeric'
-import RegExPattern from './validations/RegExPattern'
 import SafePassword from './validations/SafePassword'
-import Has from './validations/Has'
-import HasNot from './validations/HasNot'
-
+import RegExPattern from './validations/RegExPattern'
 
 const validationsMap = {
   'alphabetic': Alphabetic,
@@ -22,8 +21,6 @@ const validationsMap = {
 }
 
 var factory = new ValidationFactory(validationsMap)
-
-
 
 class ValidString {
   validation = null
@@ -125,22 +122,12 @@ class ValidString {
   }
 
   has(options) {
-    return this.append('Has', options)
+    return this.append('has', options)
   }
 
   hasNot(options) {
-    return this.append('HasNot', options)
+    return this.append('hasNot', options)
   }
 }
 
 export default ValidString
-/*
-export NotEmpty
-export Alphabetic
-export AlphaNumeric
-export Numeric
-export RegExPattern
-export SafePassword
-export Has
-export HasNot
-*/
