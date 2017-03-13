@@ -65,7 +65,6 @@ var ValidString = function () {
 
     this.validation = null;
 
-
     if (validations) {
       this.appendMap(validations);
     }
@@ -101,6 +100,11 @@ var ValidString = function () {
   _createClass(ValidString, [{
     key: 'append',
     value: function append(validationKey, options) {
+      // Resets the validation property if new validations are added after a string has been tested on the same instance
+      if (this.hasValidations && this.isTested) {
+        console.warn('It is not recomended to add new validation specifications once you perform a .test() or assert().');
+        this.validation = null;
+      }
       this.validation = factory.spawn(validationKey, this.validation, options);
       return this;
     }
@@ -118,16 +122,16 @@ var ValidString = function () {
       return this;
     }
   }, {
-    key: 'getErrorMessage',
-    value: function getErrorMessage(replacement) {
+    key: 'getErrorMessages',
+    value: function getErrorMessages(replacement) {
       if (!this.isTested) {
         throw new Error('Cannot get error messages for an untested validation, try running .test() or .assert() first.');
       }
       if (typeof replacement !== 'string') {
-        throw new Error('Unexpected "' + (typeof replacement === 'undefined' ? 'undefined' : _typeof(replacement)) + '" input, the argument of .getErrorMessage() cannot be any other than a string.');
+        throw new Error('Unexpected "' + (typeof replacement === 'undefined' ? 'undefined' : _typeof(replacement)) + '" input, the argument of .getErrorMessages() cannot be any other than a string.');
       }
 
-      return this.validation.getErrorMessage(replacement);
+      return this.validation.getErrorMessages(replacement);
     }
   }, {
     key: 'test',

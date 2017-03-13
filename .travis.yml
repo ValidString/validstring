@@ -3,4 +3,10 @@ node_js:
 - "5"
 sudo: false
 script:
-  - npm test
+  - npm run cover
+addons:
+    code_climate:
+        repo_token: e4d23290bb8b191fc1984aa9e0fe9af4d1b0e645a5f9b398264bb68a3df39c5d
+
+# Send coverage data to Coveralls
+after_script: "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js"

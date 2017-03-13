@@ -22,20 +22,17 @@ var SafePassword = function (_BaseValidation) {
   _inherits(SafePassword, _BaseValidation);
 
   function SafePassword() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, SafePassword);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SafePassword.__proto__ || Object.getPrototypeOf(SafePassword)).call.apply(_ref, [this].concat(args))), _this), _this.errorMessage = '%s must be at least 8 characters long and should contain both letters and numbers.', _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (SafePassword.__proto__ || Object.getPrototypeOf(SafePassword)).apply(this, arguments));
   }
 
   _createClass(SafePassword, [{
+    key: 'getDefaultErrorMessage',
+    value: function getDefaultErrorMessage() {
+      return '%s must be at least 8 characters long and should contain both letters and numbers.';
+    }
+  }, {
     key: 'evaluate',
     value: function evaluate(text) {
       var longerThan8 = /.{8}/.test(text);

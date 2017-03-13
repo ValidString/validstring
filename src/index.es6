@@ -23,9 +23,8 @@ const validationsMap = {
 var factory = new ValidationFactory(validationsMap)
 
 class ValidString {
-  validation = null
-
   constructor(validations){
+    this.validation = null
 
     if(validations){
       this.appendMap(validations)
@@ -52,6 +51,11 @@ class ValidString {
   }
 
   append(validationKey, options) {
+    // Resets the validation property if new validations are added after a string has been tested on the same instance
+    if(this.hasValidations && this.isTested) {
+      console.warn('It is not recomended to add new validation specifications once you perform a .test() or assert().')
+      this.validation = null
+    }
     this.validation = factory.spawn(validationKey, this.validation, options)
     return this
   }
@@ -68,15 +72,15 @@ class ValidString {
     return this
   }
 
-  getErrorMessage(replacement) {
+  getErrorMessages(replacement) {
     if(!this.isTested) {
       throw new Error(`Cannot get error messages for an untested validation, try running .test() or .assert() first.`)
     }
     if(typeof replacement !== 'string') {
-      throw new Error(`Unexpected "${typeof replacement}" input, the argument of .getErrorMessage() cannot be any other than a string.`)
+      throw new Error(`Unexpected "${typeof replacement}" input, the argument of .getErrorMessages() cannot be any other than a string.`)
     }
 
-    return this.validation.getErrorMessage(replacement)
+    return this.validation.getErrorMessages(replacement)
   }
 
   test(text) {

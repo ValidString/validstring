@@ -1,7 +1,10 @@
 import BaseValidation from '../BaseValidation'
 
 class SafePassword extends BaseValidation {
-  errorMessage = '%s must be at least 8 characters long and should contain both letters and numbers.'
+  getDefaultErrorMessage(){
+    return '%s must be at least 8 characters long and should contain both letters and numbers.'
+  }
+
   evaluate(text){
     var longerThan8 = /.{8}/.test(text)
     var containsAlpha = /[A-Za-z]+/.test(text)

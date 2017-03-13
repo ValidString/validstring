@@ -20,9 +20,6 @@ var BaseValidation = function () {
   function BaseValidation() {
     _classCallCheck(this, BaseValidation);
 
-    this.errorMessage = '';
-
-
     var baseValidation = false;
     var options = false;
 
@@ -34,6 +31,8 @@ var BaseValidation = function () {
       }
     }
 
+    options = options || {};
+
     Object.defineProperties(this, {
       'baseValidation': {
         configurable: false,
@@ -43,7 +42,7 @@ var BaseValidation = function () {
       'options': {
         configurable: false,
         writable: false,
-        value: options || {}
+        value: options
       },
       'tested': {
         configurable: true,
@@ -59,6 +58,11 @@ var BaseValidation = function () {
         configurable: true,
         writable: false,
         value: null
+      },
+      'errorMessage': {
+        configurable: true,
+        writable: false,
+        value: this.getDefaultErrorMessage(options)
       }
     });
   }
@@ -74,35 +78,49 @@ var BaseValidation = function () {
   _createClass(BaseValidation, [{
     key: 'setErrorMessage',
     value: function setErrorMessage(options) {
-      if (typeof options.errorMessage === 'string') {
-        this.errorMessage = options.errorMessage;
-      } else if (options.errorMessage) {
-        throw new Error('Unexpected "' + _typeof(options.errorMessage) + '" input, the argument of .getErrorMessage() cannot be any other than a string.');
+      var errorMessage = '';
+      if (options && options.constructor.name === 'Object') {
+        if (typeof options.errorMessage === 'string') {
+          //this.errorMessage = options.errorMessage
+          errorMessage = options.errorMessage;
+        } else if (options.errorMessage) {
+          throw new Error('Unexpected "' + _typeof(options.errorMessage) + '" input, the value of errorMessage cannot be any other than a string.');
+        }
+      } else if (typeof options === 'string') {
+        errorMessage = options;
+      } else {
+        throw new Error('Unexpected "' + (typeof options === 'undefined' ? 'undefined' : _typeof(options)) + '" input, the argument of .setErrorMessage() cannot be any other than an object or a string.');
       }
+
+      Object.defineProperty(this, 'errorMessage', {
+        configurable: true,
+        writable: false,
+        value: errorMessage
+      });
 
       return this;
     }
 
     /**
-     * getErrorMessage
+     * getErrorMessages
      *
      * @param {string} replacement
      * @return {array}
      */
 
   }, {
-    key: 'getErrorMessage',
-    value: function getErrorMessage(replacement) {
+    key: 'getErrorMessages',
+    value: function getErrorMessages(replacement) {
       if (!this.tested) {
         throw new Error('Cannot get error messages for an untested validation, try running .test() first.');
       }
       if (typeof replacement !== 'string') {
-        throw new Error('Unexpected "' + (typeof replacement === 'undefined' ? 'undefined' : _typeof(replacement)) + '" input, the argument of .getErrorMessage() cannot be any other than a string.');
+        throw new Error('Unexpected "' + (typeof replacement === 'undefined' ? 'undefined' : _typeof(replacement)) + '" input, the argument of .getErrorMessages() cannot be any other than a string.');
       }
 
       var thisMessage = this.errorMessage && !this.isThisValid ? [this.errorMessage.replace(/%s/, replacement)] : [];
 
-      return this.baseValidation instanceof BaseValidation ? this.baseValidation.getErrorMessage(replacement).concat(thisMessage) : thisMessage;
+      return this.baseValidation instanceof BaseValidation ? this.baseValidation.getErrorMessages(replacement).concat(thisMessage) : thisMessage;
     }
 
     /**
@@ -121,9 +139,11 @@ var BaseValidation = function () {
         throw new Error('Unexpected "' + (typeof text === 'undefined' ? 'undefined' : _typeof(text)) + '" input, the argument of .test() cannot be any other than a string.');
       }
 
-      this.setErrorMessage(this.options);
-
+      if (this.options.errorMessage) {
+        this.setErrorMessage(this.options);
+      }
       var isThisValid = this.evaluate(text, this.options);
+      var isValid = this.baseValidation instanceof BaseValidation ? this.baseValidation.test(text).isValid && isThisValid : isThisValid;
 
       Object.defineProperties(this, {
         'tested': {
@@ -134,7 +154,7 @@ var BaseValidation = function () {
         'isValid': {
           configurable: true,
           writable: false,
-          value: this.baseValidation instanceof BaseValidation ? this.baseValidation.test(text).isValid && isThisValid : isThisValid
+          value: isValid
         },
         'isThisValid': {
           configurable: true,
@@ -145,8 +165,8 @@ var BaseValidation = function () {
 
       return {
         isValid: this.isValid,
-        getErrorMessage: function getErrorMessage(subject) {
-          return _this.getErrorMessage(subject);
+        getErrorMessages: function getErrorMessages(subject) {
+          return _this.getErrorMessages(subject);
         },
         assert: function assert(b) {
           return _this.assert(_this, b);
@@ -180,14 +200,16 @@ var BaseValidation = function () {
     }
 
     /**
-     * errorMessage - this property is ment to be overridden
-     *
-     * @var {string} The error message returned by .getErrorMessage()
+     * getErrorMessage - this method is ment to be overridden
+     * @param {object} options
+     * @return {string} The error message returned by .getErrorMessages()
      */
 
   }, {
-    key: 'evaluate',
-
+    key: 'getDefaultErrorMessage',
+    value: function getDefaultErrorMessage(options) {
+      return '';
+    }
 
     /**
      * evaluate - this method is ment to be overridden
@@ -195,6 +217,9 @@ var BaseValidation = function () {
      * @param {string} text
      * @return {boolean}
      */
+
+  }, {
+    key: 'evaluate',
     value: function evaluate(text) {
       return true;
     }

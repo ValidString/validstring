@@ -24,20 +24,17 @@ var RegExPattern = function (_BaseValidation) {
   _inherits(RegExPattern, _BaseValidation);
 
   function RegExPattern() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, RegExPattern);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RegExPattern.__proto__ || Object.getPrototypeOf(RegExPattern)).call.apply(_ref, [this].concat(args))), _this), _this.errorMessage = '%s is not valid.', _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (RegExPattern.__proto__ || Object.getPrototypeOf(RegExPattern)).apply(this, arguments));
   }
 
   _createClass(RegExPattern, [{
+    key: 'getDefaultErrorMessage',
+    value: function getDefaultErrorMessage() {
+      return '%s is not valid.';
+    }
+  }, {
     key: 'evaluate',
     value: function evaluate(text, options) {
       if (!(options.pattern instanceof RegExp)) {

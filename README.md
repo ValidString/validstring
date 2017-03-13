@@ -1,13 +1,13 @@
 ValidString
 =========
+[![MIT license](https://img.shields.io/npm/l/validstring.svg?maxAge=2592000)](https://spdx.org/licenses/MIT)
 [![npm](https://img.shields.io/npm/v/validstring.svg?maxAge=86325)](https://www.npmjs.com/package/validstring)
 [![npm dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)]()
-[![npm](https://img.shields.io/npm/dt/validstring.svg?maxAge=86325)](https://www.npmjs.com/package/validstring)
-[![npm](https://img.shields.io/npm/l/validstring.svg?maxAge=2592000)](https://spdx.org/licenses/MIT)
 [![travis-ci](https://api.travis-ci.org/ranaharoni/validstring.svg?branch=master)](https://travis-ci.org/ranaharoni/validstring?branch=master)
+[![Code Climate](https://codeclimate.com/github/ranaharoni/validstring/badges/gpa.svg)](https://codeclimate.com/github/ranaharoni/validstring)
+[![Issue Count](https://codeclimate.com/github/ranaharoni/validstring/badges/issue_count.svg)](https://codeclimate.com/github/ranaharoni/validstring)
 
 A handy validation library for strings
-
 
 ## Installation
 
@@ -21,8 +21,6 @@ import ValidString from 'validstring'
 var validator = new ValidString()
 validator.alphaNumeric({extraChars: ' '}).notEmpty().test('Hello world').isValid
 // Returns: true
-
-
 ```
 
 
@@ -51,7 +49,6 @@ validator4.appendMap({
   alphaNumeric: {extraChars: ' '}
 }).test('Hello world').isValid
 // Returns: true
-
 ```
 
 > For simplicity reasons all the examples from now on will be shown using the `chainable style`, as shown in `validator1`.

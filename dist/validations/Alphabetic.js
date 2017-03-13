@@ -22,20 +22,17 @@ var Alphabetic = function (_BaseValidation) {
   _inherits(Alphabetic, _BaseValidation);
 
   function Alphabetic() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, Alphabetic);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Alphabetic.__proto__ || Object.getPrototypeOf(Alphabetic)).call.apply(_ref, [this].concat(args))), _this), _this.errorMessage = '%s must contain upper and lower case letters from A to Z only.', _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (Alphabetic.__proto__ || Object.getPrototypeOf(Alphabetic)).apply(this, arguments));
   }
 
   _createClass(Alphabetic, [{
+    key: 'getDefaultErrorMessage',
+    value: function getDefaultErrorMessage() {
+      return '%s must contain upper and lower case letters from A to Z only.';
+    }
+  }, {
     key: 'evaluate',
     value: function evaluate(text, options) {
       var extraChars = typeof options.extraChars === 'string' ? options.extraChars : '';

@@ -22,20 +22,17 @@ var NotEmpty = function (_BaseValidation) {
   _inherits(NotEmpty, _BaseValidation);
 
   function NotEmpty() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, NotEmpty);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NotEmpty.__proto__ || Object.getPrototypeOf(NotEmpty)).call.apply(_ref, [this].concat(args))), _this), _this.errorMessage = '%s must not be empty.', _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (NotEmpty.__proto__ || Object.getPrototypeOf(NotEmpty)).apply(this, arguments));
   }
 
   _createClass(NotEmpty, [{
+    key: 'getDefaultErrorMessage',
+    value: function getDefaultErrorMessage() {
+      return '%s must not be empty.';
+    }
+  }, {
     key: 'evaluate',
     value: function evaluate(text) {
       return (/(?:\s|\S)+/.test(text)

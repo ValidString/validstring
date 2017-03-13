@@ -19,6 +19,8 @@ class BaseValidation {
       }
     }
 
+    options = options || {}
+
     Object.defineProperties(this, {
       'baseValidation':{
         configurable: false,
@@ -28,7 +30,7 @@ class BaseValidation {
       'options':{
         configurable: false,
         writable: false,
-        value: options || {}
+        value: options
       },
       'tested': {
         configurable: true,
@@ -44,6 +46,11 @@ class BaseValidation {
         configurable: true,
         writable: false,
         value: null
+      },
+      'errorMessage': {
+        configurable: true,
+        writable: false,
+        value: this.getDefaultErrorMessage(options)
       }
     })
   }
@@ -55,32 +62,46 @@ class BaseValidation {
    * @return {this}
    */
   setErrorMessage(options){
-    if(typeof options.errorMessage === 'string') {
-      this.errorMessage = options.errorMessage
-    } else if(options.errorMessage) {
-      throw new Error(`Unexpected "${typeof options.errorMessage}" input, the argument of .getErrorMessage() cannot be any other than a string.`)
-    }
-    
+    var errorMessage = ''
+    if(options && options.constructor.name === 'Object') {
+      if(typeof options.errorMessage === 'string') {
+        //this.errorMessage = options.errorMessage
+        errorMessage = options.errorMessage
+      } else if(options.errorMessage) {
+        throw new Error(`Unexpected "${typeof options.errorMessage}" input, the value of errorMessage cannot be any other than a string.`)
+      }
+    } else if(typeof options === 'string'){
+      errorMessage = options
+    } else {
+      throw new Error(`Unexpected "${typeof options}" input, the argument of .setErrorMessage() cannot be any other than an object or a string.`)
+    } 
+
+    Object.defineProperty(this, 'errorMessage', {
+      configurable: true,
+      writable: false,
+      value: errorMessage
+    })
+
     return this
   }
 
   /**
-   * getErrorMessage
+   * getErrorMessages
    *
    * @param {string} replacement
    * @return {array}
    */
-  getErrorMessage(replacement) {
+  getErrorMessages(replacement) {
     if(!this.tested) {
       throw new Error(`Cannot get error messages for an untested validation, try running .test() first.`)
     }
     if(typeof replacement !== 'string') {
-      throw new Error(`Unexpected "${typeof replacement}" input, the argument of .getErrorMessage() cannot be any other than a string.`)
+      throw new Error(`Unexpected "${typeof replacement}" input, the argument of .getErrorMessages() cannot be any other than a string.`)
     }
 
     var thisMessage = this.errorMessage && !this.isThisValid ? [this.errorMessage.replace(/%s/,replacement)] : []
 
-    return this.baseValidation instanceof BaseValidation ? this.baseValidation.getErrorMessage(replacement).concat(thisMessage) : thisMessage
+    return this.baseValidation instanceof BaseValidation ? this.baseValidation.getErrorMessages(replacement).concat(thisMessage) : thisMessage
   }
 
   /**
@@ -94,9 +115,12 @@ class BaseValidation {
       throw new Error(`Unexpected "${typeof text}" input, the argument of .test() cannot be any other than a string.`)
     }
 
-    this.setErrorMessage(this.options)
-
+    if(this.options.errorMessage) {
+      this.setErrorMessage(this.options)
+    }
     var isThisValid = this.evaluate(text, this.options)
+    var isValid = this.baseValidation instanceof BaseValidation ? this.baseValidation.test(text).isValid && isThisValid : isThisValid;
+
 
     Object.defineProperties(this, {
       'tested': {
@@ -107,7 +131,7 @@ class BaseValidation {
       'isValid': {
         configurable: true,
         writable: false,
-        value: this.baseValidation instanceof BaseValidation ? this.baseValidation.test(text).isValid && isThisValid : isThisValid
+        value: isValid
       },
       'isThisValid': {
         configurable: true,
@@ -118,7 +142,7 @@ class BaseValidation {
 
     return {
       isValid: this.isValid,
-      getErrorMessage: subject => this.getErrorMessage(subject),
+      getErrorMessages: subject => this.getErrorMessages(subject),
       assert: (b) => this.assert(this, b)
     }
   }
@@ -146,11 +170,13 @@ class BaseValidation {
   }
 
   /**
-   * errorMessage - this property is ment to be overridden
-   *
-   * @var {string} The error message returned by .getErrorMessage()
+   * getErrorMessage - this method is ment to be overridden
+   * @param {object} options
+   * @return {string} The error message returned by .getErrorMessages()
    */
-  errorMessage = ''
+  getDefaultErrorMessage(options) {
+    return ''
+  }
 
   /**
    * evaluate - this method is ment to be overridden

@@ -22,20 +22,17 @@ var Numeric = function (_BaseValidation) {
   _inherits(Numeric, _BaseValidation);
 
   function Numeric() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, Numeric);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Numeric.__proto__ || Object.getPrototypeOf(Numeric)).call.apply(_ref, [this].concat(args))), _this), _this.errorMessage = '%s must contain numbers only.', _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (Numeric.__proto__ || Object.getPrototypeOf(Numeric)).apply(this, arguments));
   }
 
   _createClass(Numeric, [{
+    key: 'getDefaultErrorMessage',
+    value: function getDefaultErrorMessage() {
+      return '%s must contain numbers only.';
+    }
+  }, {
     key: 'evaluate',
     value: function evaluate(text, options) {
       var extraChars = typeof options.extraChars === 'string' ? options.extraChars : '';
