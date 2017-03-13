@@ -1,11 +1,11 @@
 {
   "name": "validstring",
-  "version": "1.1.0",
+  "version": "1.1.8",
   "description": "A handy validation library for strings",
   "main": "dist/index.js",
   "scripts": {
     "test": "npm run build && mocha --reporter spec",
-    "build": "babel ./src --out-dir ./dist",
+    "build": "babel ./src --out-dir ./lib",
     "prepublish": "npm run build",
     "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*"
   },
@@ -34,6 +34,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-preset-stage-3": "^6.22.0",
     "chai": "^3.5.0",
+    "codeclimate-test-reporter": "^0.4.1",
     "coveralls": "^2.12.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0"

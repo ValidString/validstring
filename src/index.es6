@@ -8,6 +8,7 @@ import Alphabetic from './validations/Alphabetic'
 import AlphaNumeric from './validations/AlphaNumeric'
 import SafePassword from './validations/SafePassword'
 import RegExPattern from './validations/RegExPattern'
+import IsPalindrome from './validations/IsPalindrome'
 
 const validationsMap = {
   'alphabetic': Alphabetic,
@@ -17,7 +18,8 @@ const validationsMap = {
   'regExPattern': RegExPattern,
   'safePassword': SafePassword,
   'has': Has,
-  'hasNot': HasNot
+  'hasNot': HasNot,
+  'isPalindrome': IsPalindrome
 }
 
 var factory = new ValidationFactory(validationsMap)
@@ -131,6 +133,10 @@ class ValidString {
 
   hasNot(options) {
     return this.append('hasNot', options)
+  }
+
+  isPalindrome(options) {
+    return this.append('isPalindrome', options)
   }
 }
 

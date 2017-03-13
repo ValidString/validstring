@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var validation = require('../../dist/validations/Has').default
+var validation = require('../../lib/validations/Has').default
 
 describe('Has validation', function() {
 
@@ -16,5 +16,15 @@ describe('Has validation', function() {
   it('should return false when the string does not contain a @', function() {
       var result = instance.test('test')
       expect(result.isValid).to.equal(false);
+  });
+
+  it('should throw an error when option.chars is not a available', function() {
+      var result = null
+      try {
+        new validation().test('hello world')
+      } catch (e) {
+        result = e instanceof Error
+      }
+      expect(result).to.equal(true);
   });
 });

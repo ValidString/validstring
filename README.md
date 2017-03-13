@@ -5,6 +5,7 @@ ValidString
 [![npm dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)]()
 [![travis-ci](https://api.travis-ci.org/ranaharoni/validstring.svg?branch=master)](https://travis-ci.org/ranaharoni/validstring?branch=master)
 [![Code Climate](https://codeclimate.com/github/ranaharoni/validstring/badges/gpa.svg)](https://codeclimate.com/github/ranaharoni/validstring)
+[![Test Coverage](https://codeclimate.com/github/ranaharoni/validstring/badges/coverage.svg)](https://codeclimate.com/github/ranaharoni/validstring/coverage)
 [![Issue Count](https://codeclimate.com/github/ranaharoni/validstring/badges/issue_count.svg)](https://codeclimate.com/github/ranaharoni/validstring)
 
 A handy validation library for strings

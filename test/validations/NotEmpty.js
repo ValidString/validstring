@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var validation = require('../../dist/validations/NotEmpty').default
+var validation = require('../../lib/validations/NotEmpty').default
 
 describe('NotEmpty validation', function() {
 

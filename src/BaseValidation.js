@@ -20,6 +20,10 @@ class BaseValidation {
     }
 
     options = options || {}
+    
+    this.setErrorMessage(typeof options.errorMessage === 'string' ? options : this.getDefaultErrorMessage(options))
+
+
 
     Object.defineProperties(this, {
       'baseValidation':{
@@ -46,11 +50,6 @@ class BaseValidation {
         configurable: true,
         writable: false,
         value: null
-      },
-      'errorMessage': {
-        configurable: true,
-        writable: false,
-        value: this.getDefaultErrorMessage(options)
       }
     })
   }
@@ -65,7 +64,6 @@ class BaseValidation {
     var errorMessage = ''
     if(options && options.constructor.name === 'Object') {
       if(typeof options.errorMessage === 'string') {
-        //this.errorMessage = options.errorMessage
         errorMessage = options.errorMessage
       } else if(options.errorMessage) {
         throw new Error(`Unexpected "${typeof options.errorMessage}" input, the value of errorMessage cannot be any other than a string.`)
@@ -74,7 +72,7 @@ class BaseValidation {
       errorMessage = options
     } else {
       throw new Error(`Unexpected "${typeof options}" input, the argument of .setErrorMessage() cannot be any other than an object or a string.`)
-    } 
+    }
 
     Object.defineProperty(this, 'errorMessage', {
       configurable: true,
@@ -115,9 +113,6 @@ class BaseValidation {
       throw new Error(`Unexpected "${typeof text}" input, the argument of .test() cannot be any other than a string.`)
     }
 
-    if(this.options.errorMessage) {
-      this.setErrorMessage(this.options)
-    }
     var isThisValid = this.evaluate(text, this.options)
     var isValid = this.baseValidation instanceof BaseValidation ? this.baseValidation.test(text).isValid && isThisValid : isThisValid;
 
@@ -179,13 +174,23 @@ class BaseValidation {
   }
 
   /**
+   * getRequirements - this method is ment to be overridden
+   *
+   * @param {object} options
+   * @return {array}
+   */
+  getRequirements(options){
+    return []
+  }
+
+  /**
    * evaluate - this method is ment to be overridden
    *
    * @param {string} text
    * @return {boolean}
    */
   evaluate(text){
-    return true
+    return ''
   }
 }
 

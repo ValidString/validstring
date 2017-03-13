@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var validation = require('../../dist/validations/SafePassword').default
+var validation = require('../../lib/validations/SafePassword').default
 
 describe('SefePassword validation', function() {
 

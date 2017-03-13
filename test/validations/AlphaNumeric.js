@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var validation = require('../../dist/validations/AlphaNumeric').default
+var validation = require('../../lib/validations/AlphaNumeric').default
 
 describe('AlphaNumeric validation', function() {
 

@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var validation = require('../../dist/validations/Numeric').default
+var validation = require('../../lib/validations/Numeric').default
 
 describe('Numeric validation', function() {
 
