@@ -29,10 +29,12 @@ In order to not force you to change your programming style, there are several wa
 ```js
 import ValidString from 'validstring'
 
+// Chained validation
 var validator1 = new ValidString()
 validator.alphaNumeric({extraChars: ' '}).notEmpty().test('Hello world').isValid
 // Returns: true
 
+// Constucted validation
 var validator2 = new ValidString({
   notEmpty: null,
   alphaNumeric: {extraChars: ' '}
@@ -40,10 +42,13 @@ var validator2 = new ValidString({
 validator2.test('Hello world').isValid
 // Returns: true
 
+// Built validation
+// Useful when the validation needs to be defined programmatically
 var validator3 = new ValidString()
 validator3.append('notEmpty').append('alphaNumeric', {extraChars: ' '}).test('Hello world').isValid
 // Returns: true
 
+// Bi-dimensional build validation
 var validator4 = new ValidString()
 validator4.appendMap({
   notEmpty: null,
@@ -52,7 +57,7 @@ validator4.appendMap({
 // Returns: true
 ```
 
-> For simplicity reasons all the examples from now on will be shown using the `chainable style`, as shown in `validator1`.
+> For simplicity reasons all the examples from now on will be shown using the `chainable style`, as shown in `validator1`
 
 
 #### Check Validity
@@ -64,11 +69,11 @@ validator.numeric().test('John doe').isValid
 #### Assert validity
 ```js
 var validator1 = new ValidString()
-validator.numeric().test('John doe').assert(false)
+validator1.numeric().test('John doe').assert(false)
 // Returns: true
 
 var validator2 = new ValidString()
-validator.numeric().assert('John doe', false)
+validator2.numeric().assert('John doe', false)
 // Returns: true
 ```
 > Note that: The `validator2` differs from `validator1` in the fact that it does not use the `.test(str)` method, but instead it uses the `.assert(str, bool)`, which will perform the test and assert the result, returning a **boolean** value.
@@ -97,8 +102,8 @@ Is valid if the tested string has only characters from **A** to **Z** (or **a** 
 
 | Name         | Expected type  | Description                              | Example                                  |
 | ------------ | -------------- | ---------------------------------------- | ---------------------------------------- |
-| extraChars   | (empty string) | Extends the range of characters accepted by this validation. | ` {extraChars: '-_$', ...} `             |
-| errorMessage | (empty string) | Sets a custom error message for this validation. Note that `%s` will be replaced by the name of the field or any text you define later on. | ` {errorMessage: '%s must have numbers', ...} ` |
+| extraChars   | string         | Extends the range of characters accepted by this validation. | ` {extraChars: '-_$', ...} `             |
+| errorMessage | string         | Sets a custom error message for this validation. Note that `%s` will be replaced by the name of the field or any text you define later on. | ` {errorMessage: '%s must have numbers', ...} ` |
 
 ---
 
@@ -165,7 +170,7 @@ Is valid if the tested string has 1 or more characters
 
 | Name         | Expected type  | Description                              | Example                                  |
 | ------------ | -------------- | ---------------------------------------- | ---------------------------------------- |
-| errorMessage | (empty string) | Sets a custom error message for this validation. Note that `%s` will be replaced by the name of the field or any text you define later on. | ` {errorMessage: '%s must have numbers', ...} ` |
+| errorMessage | string         | Sets a custom error message for this validation. Note that `%s` will be replaced by the name of the field or any text you define later on. | ` {errorMessage: '%s must have numbers', ...} ` |
 
 ---
 
