@@ -1,6 +1,6 @@
 {
   "name": "validstring",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "A handy validation library for strings",
   "main": "dist/index.js",
   "scripts": {
